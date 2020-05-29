@@ -177,6 +177,26 @@ export const indentSelection: StateCommand = ({state, dispatch}): boolean => {
   return true
 }
 
+///
+export const insertNewlineAboveAndIndent: StateCommand = ({state, dispatch}): boolean => {
+  // const l = view.state.doc.line(20)
+  // const pos = l.start
+  // const tr = view.state.t()
+  // tr.scrollIntoView()
+  // tr.setSelection(pos)
+  // view.dispatch(tr)
+  // const tr = state.t()
+  // tr.forEachRange((range, _tr) => {
+  //   const line = state.doc.lineAt(range.head)
+  //   const pos = line.start
+  //   tr.replace(pos, pos, ["", "|"])
+  //   return range
+  // })
+  // dispatch(tr)
+
+  return true
+}
+
 /// The default keymap for Linux/Windows/non-Mac platforms. Binds the
 /// arrows for cursor motion, shift-arrow for selection extension,
 /// ctrl-arrows for by-word motion, home/end for line start/end,
@@ -226,7 +246,8 @@ export const macBaseKeymap: {[key: string]: Command} = {
   "Cmd-ArrowUp": selectDocStart,
   "Cmd-ArrowDown": selectDocEnd,
   "Control-d": deleteCharForward,
-  "Control-h": deleteCharBackward
+  "Control-h": deleteCharBackward,
+  "Shift-Cmd-Enter": insertNewlineAboveAndIndent,
 }
 for (let key in pcBaseKeymap) macBaseKeymap[key] = pcBaseKeymap[key]
 

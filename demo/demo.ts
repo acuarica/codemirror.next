@@ -25,13 +25,11 @@ import {linter, openLintPanel} from "@codemirror/next/lint"
 //import legacyJS from "@codemirror/next/legacy-modes/src/javascript"
 
 let isMac = /Mac/.test(navigator.platform)
-let state = EditorState.create({doc: `<script>
-  const {readFile} = require("fs");
-  readFile("package.json", "utf8", (err, data) => {
-    console.log(data);
-  });
-</script>
-`, extensions: [
+let s = ""
+for (let i = 0; i < 2000; i++) {
+  s += i + "\n"
+}
+let state = EditorState.create({doc: s, extensions: [
   lineNumbers(),
   specialChars(),
   history(),
@@ -66,3 +64,9 @@ let state = EditorState.create({doc: `<script>
 
 let view = (window as any).view = new EditorView({state})
 document.querySelector("#editor")!.appendChild(view.dom)
+
+console.log("init")
+document.querySelector('#scrollbutton')!.addEventListener('click', function() {
+  console.log("scrollbutton")
+  view.scrollIntoView(1000)
+})

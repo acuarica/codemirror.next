@@ -4,7 +4,7 @@ import {StyleModule, Style} from "style-mod"
 import {DocView} from "./docview"
 import {ContentView} from "./contentview"
 import {InputState, MouseSelectionUpdate} from "./input"
-import {Rect, focusPreventScroll} from "./dom"
+import {Rect, focusPreventScroll, scrollRectIntoView} from "./dom"
 import {movePos, posAtCoords} from "./cursor"
 import {BlockInfo} from "./heightmap"
 import {ViewState} from "./viewstate"
@@ -211,13 +211,12 @@ export class EditorView {
   /// In other words, it makes `pos` visible,
   /// without changing the current selection.
   scrollIntoView(pos: number) {
-    const update = new ViewUpdate(this, this.state, [])
-    this.viewState.update(update, pos)
-    this.docView.update(update)
-    if (this.state.facet(styleModule) != this.styleModules) this.mountStyles()
-    this.updateAttrs()
-    this.updateState = UpdateState.Idle
-    this.requestMeasure()
+    const coords = this.coordsAtPos(pos)
+    console.log(coords)
+    if (coords) {
+      scrollRectIntoView(this.dom, coords)
+      this.requestMeasure()
+    }
   }
 
   /// @internal
